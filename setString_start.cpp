@@ -1,32 +1,55 @@
-#include <iostream>
-#include <map>
-using namespace std;
-int main ()
-{
-map<char,int> mymap;
-// first insert function version (single parameter):
-mymap.insert ( pair<char,int>('a',100) );
-mymap.insert ( pair<char,int>('z',200) );
-mymap['t'] = 10;
-pair<map<char,int>::iterator,bool> ret;
-ret = mymap.insert ( pair<char,int>('z',500) );
-if (ret.second==false) {
-cout << "element 'z' already existed";
-cout << " with a value of " << ret.first->second << '\n';
-}
-// second insert function version (with hint position):
-map<char,int>::iterator it = mymap.begin();
-mymap.insert (it, pair<char,int>('b',300)); // max efficiency inserting
-mymap.insert (it, pair<char,int>('c',400)); // no max efficiency inserting
-// third insert function version (range insertion):
-map<char,int> anothermap;
-anothermap.insert(mymap.begin(),mymap.find('c'));
-// showing contents:
-cout << "mymap contains:\n";
-for (it=mymap.begin(); it!=mymap.end(); ++it)
-cout << it->first << " => " << it->second << '\n';
-cout << "anothermap contains:\n";
-for (it=anothermap.begin(); it!=anothermap.end(); ++it)
-cout << it->first << " => " << it->second << '\n';
-return 0;
+#include<iostream>
+#include<set>
+#include<string>
+using std::cout;
+using std::endl;
+using std::string;
+using std::set;
+using std::pair;
+int main() {
+    set<string> setOfNames;
+    set<string>::iterator it;
+    // Lets insert four names
+    setOfNames.insert("John");
+    setOfNames.insert("Jane");
+    setOfNames.insert("Nick");
+    setOfNames.insert("Steve");
+    string mynames[]={"Adam", "Sue"};
+
+    //insert the values in mynames array to your set.
+    setOfNames.insert (mynames, mynames+2);
+
+    //Try to insert Adam again, and using the return value which is a pair to
+    pair<set<string>::iterator, bool> ret;
+    ret = setOfNames.insert("Adam");
+
+    if (ret.second == false) {
+        cout << "Adam already exists" << endl;}
+    else {cout << "Adam was inserted successfully" << endl;}
+
+
+    //Use iterator to print current values.
+    cout << "setOfNames contains the following: " << endl;
+    for (it = setOfNames.begin(); it != setOfNames.end(); it++) {
+        cout << ' ' << *it << endl;
+    }
+
+    // Search for element in set using find member function
+    it = setOfNames.find ("John");
+    if(it != setOfNames.end())
+        cout<<"'John' found"<<endl;
+    else
+        cout<<"'John' not found"<<endl;
+
+    // Use the example above to perform a search for another name such as "adam"
+    it = setOfNames.find("adam");
+    if(it != setOfNames.end())
+        cout<<"'adam' found"<<endl;
+    else
+        cout<<"'adam' not found"<<endl;
+
+
+    setOfNames.erase ("Adam");
+
+    return 0;
 }
